@@ -22,13 +22,6 @@ app.events.KeyboardEvent = (function() {
         move_down  : 40  // '↓'
     };
 
-
-    // var SPIN_LEFT  = 1;
-    // var SPIN_RIGHT = -1;
-    // var MOVE_LEFT  = 0;
-    // var MOVE_DOWN  = 1;
-    // var MOVE_RIGHT = 2;
-
     var onSpinHandler = function (spinIndex) {};
     var onMoveHandler = function (moveIndex) {};
 
@@ -103,7 +96,7 @@ app.events.KeyboardEvent = (function() {
         }
     };
 
-    KeyboardEvent.prototype.addListeners = function (window) {
+    KeyboardEvent.prototype.addListeners = function () {
         this.removeListeners();
         window.addEventListener("keydown", keyDown);
     };
@@ -116,6 +109,7 @@ app.events.KeyboardEvent = (function() {
         getInstance : function () {
             if (!_instance) {
                 _instance = new KeyboardEvent();
+                _instance.addListeners();
             }
 
             return _instance;

@@ -3,13 +3,13 @@
  *****************************************************/
 var config = {};
 
+// config.fps = 1; // なめらかなアニメーションにしたい場合は30 or 60を入れる
+config.gameSpeed = 1; // デフォルト値 2,3と入れるとスピードも2,3倍する
+
 config.canvas = {
     // iphone4サイズ
     width   : 320,
     height  : 480,
-
-    // GameControllerで値代入(既に値が入っていれば代入しない)
-    context : null,　
 };
 
 config.block = {
