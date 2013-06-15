@@ -104,7 +104,5 @@ app.views.GameView = (function () {
         }
     };
 
-
-
     return GameView;
 })();
