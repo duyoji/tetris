@@ -22,11 +22,12 @@ app.events.KeyboardEvent = (function() {
         move_down  : 40  // '↓'
     };
 
-    var SPIN_LEFT  = 1;
-    var SPIN_RIGHT = -1;
-    var MOVE_LEFT  = 0;
-    var MOVE_DOWN  = 1;
-    var MOVE_RIGHT = 2;
+
+    // var SPIN_LEFT  = 1;
+    // var SPIN_RIGHT = -1;
+    // var MOVE_LEFT  = 0;
+    // var MOVE_DOWN  = 1;
+    // var MOVE_RIGHT = 2;
 
     var onSpinHandler = function (spinIndex) {};
     var onMoveHandler = function (moveIndex) {};
@@ -46,7 +47,7 @@ app.events.KeyboardEvent = (function() {
         for (i = 0, n = keys.spin_left_keys.length; i < n; i++) {
             if (keys.spin_left_keys[i] === keyCode) {
                 console.log('spin left!');
-                onSpinHandler(SPIN_LEFT);
+                onSpinHandler(app.events.type.KeyboardEventType.SPIN.LEFT);
                 return;
             }
         }
@@ -54,26 +55,26 @@ app.events.KeyboardEvent = (function() {
         for (i = 0, n = keys.spin_right_keys.length; i < n; i++) {
             if (keys.spin_right_keys[i] === keyCode) {
                 console.log('spin right!');
-                onSpinHandler(SPIN_RIGHT);
+                onSpinHandler(app.events.type.KeyboardEventType.SPIN.RIGHT);
                 return;
             }
         }
 
         if (keys.move_left === keyCode) {
             console.log ('move left!');
-            onMoveHandler(MOVE_LEFT);
+            onMoveHandler(app.events.type.KeyboardEventType.MOVE.LEFT);
             return;
         }
 
         if (keys.move_right === keyCode) {
             console.log ('move right!');
-            onMoveHandler(MOVE_RIGHT);
+            onMoveHandler(app.events.type.KeyboardEventType.MOVE.RIGHT);
             return;
         }
 
         if (keys.move_down === keyCode) {
             console.log ('move down!');
-            onMoveHandler(MOVE_DOWN);
+            onMoveHandler(app.events.type.KeyboardEventType.MOVE.DOWN);
             return;
         }
 

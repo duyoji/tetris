@@ -23,8 +23,7 @@
         };
 
         kbInstance.onMoveHandler = function (moveIndex) {
-            console.log('this : ' + this + ', spinIndex : ' + moveIndex);
-
+            moveBlock(moveIndex);
         };
         // KerboardEvent.initWithWindow(window);
         // KerboardEvent.remove();
@@ -47,6 +46,29 @@
     function update () {
         // 各フィールドのインスタンスの更新をこの関数(update)で呼び出す
 
+    }
+
+    function moveBlock(moveIndex) {
+        clearCanvas();
+
+        if (moveIndex === app.events.type.KeyboardEventType.MOVE.LEFT) {
+            x--;
+        } else if (moveIndex === app.events.type.KeyboardEventType.MOVE.RIGHT) {
+            x++
+        } else if (moveIndex === app.events.type.KeyboardEventType.MOVE.DOWN) {
+            y++
+        } else {
+            throw new Error ('値が不正');
+        }
+
+        drawBlock(_block.datas);
+    }
+
+    // ブロックの初期化(新しい形にして一番上から降らせる)
+    function initBlock(block) {
+        _block.init();
+        clearCanvas();
+        drawBlock(_block.datas);
     }
 
     function clearCanvas() {
