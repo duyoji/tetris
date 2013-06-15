@@ -39,14 +39,14 @@ app.events.KeyboardEvent = (function() {
 
         for (i = 0, n = keys.ignore_keys.length; i < n; i++) {
             if (keys.ignore_keys[i] === keyCode) {
-                console.log('ignore key!');
+                // console.log('ignore key!');
                 return;
             }
         }
 
         for (i = 0, n = keys.spin_left_keys.length; i < n; i++) {
             if (keys.spin_left_keys[i] === keyCode) {
-                console.log('spin left!');
+                // console.log('spin left!');
                 onSpinHandler(app.events.type.KeyboardEventType.SPIN.LEFT);
                 return;
             }
@@ -54,31 +54,31 @@ app.events.KeyboardEvent = (function() {
 
         for (i = 0, n = keys.spin_right_keys.length; i < n; i++) {
             if (keys.spin_right_keys[i] === keyCode) {
-                console.log('spin right!');
+                // console.log('spin right!');
                 onSpinHandler(app.events.type.KeyboardEventType.SPIN.RIGHT);
                 return;
             }
         }
 
         if (keys.move_left === keyCode) {
-            console.log ('move left!');
+            // console.log ('move left!');
             onMoveHandler(app.events.type.KeyboardEventType.MOVE.LEFT);
             return;
         }
 
         if (keys.move_right === keyCode) {
-            console.log ('move right!');
+            // console.log ('move right!');
             onMoveHandler(app.events.type.KeyboardEventType.MOVE.RIGHT);
             return;
         }
 
         if (keys.move_down === keyCode) {
-            console.log ('move down!');
+            // console.log ('move down!');
             onMoveHandler(app.events.type.KeyboardEventType.MOVE.DOWN);
             return;
         }
 
-        console.log(this + ' : other kc : ' + e.keyCode);
+        // console.log(this + ' : other kc : ' + e.keyCode);
     }
 
     /**
@@ -104,9 +104,6 @@ app.events.KeyboardEvent = (function() {
     };
 
     KeyboardEvent.prototype.addListeners = function (window) {
-        if (!window) {
-            throw new Error('window必須');
-        }
         this.removeListeners();
         window.addEventListener("keydown", keyDown);
     };
