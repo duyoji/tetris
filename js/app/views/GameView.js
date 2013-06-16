@@ -15,19 +15,24 @@ app.views.GameView = (function () {
     /**
      * コンストラクタ
      */
-    function GameView() {
-        this.init();
+    function GameView(gameController) {
+        if (!gameController) {
+            throw new Error ('gameController必須');
+        }
+
+        this._gameController = gameController;
     }
 
     /**
      * 初期化
      */
     GameView.prototype.init = function () {
-        var canvas                      = document.createElement('canvas');
-        canvas.width                    = config.canvas.width;
-        canvas.height                   = config.canvas.height;
-        canvas.style.background         = '#c0c0c0';
-        document.body.appendChild(canvas);
+        // var canvas                      = document.createElement('canvas');
+        // document.body.appendChild(canvas);
+        // canvas.style.background         = '#c0c0c0';
+        var canvas    = document.getElementById('game_view');
+        canvas.width  = config.canvas.width;
+        canvas.height = config.canvas.height;
 
         this._context           = canvas.getContext('2d');
         this._context.fillStyle = config.color.gray;
@@ -96,8 +101,14 @@ app.views.GameView = (function () {
             this.initBlock();
         }
 
-        this.drawBlockMap();
 
+
+        // ブロック削除
+        this.deleteLines(this._blockMap.length-1);
+        // this.deleteLines();
+
+        // ブロック描画
+        this.drawBlockMap();
 
         // ゲームオーバーしたかチェック
         // this._blockMap[0]の行に一つでもブロックがあれば終わり
@@ -108,7 +119,53 @@ app.views.GameView = (function () {
                 // TODO ゲームオーバーの見た目考える
                 alert('ゲームオーバー');
 
+
+                this._gameController.over();
+
                 break;
+            }
+        }
+    };
+
+    // 横一列揃ってたらブロック削除
+    GameView.prototype.deleteLines = function (startLindeIndex) {
+        var mapXLength = this._blockMap[0].length; // mapのx軸方向の要素数
+        var i,n;
+        var j,m;
+        var deleteFlag = true;
+        var state;
+
+        // 一番上の行に一個でもブロックがあるとゲームオーバーになるから2行目からチェックする
+        for (i = startLindeIndex; 0 < i; i--) {
+            deleteFlag = true;
+            for (j = 0, m = mapXLength; j < m; j++) {
+                // 一つでもブロックがないところがあったら次の行に行く
+                state = this._blockMap[i][j];
+                if (state === BLOCK_NO) {
+                    deleteFlag = false;
+                    break;
+                }
+            }
+
+            if (deleteFlag) {
+                this.deleteLine(i);
+                this.deleteLines(i); // コピーしたものも一列揃っている場合があるからもう一度チェック(再帰)
+            }
+        }
+    };
+
+    GameView.prototype.deleteLine = function (lineIndex) {
+        var mapXLength = this._blockMap[0].length; // mapのx軸方向の要素数
+        var i,n;
+        var j,m;
+
+        // 一番上の行に一個でもブロックがあるとゲームオーバーになるから2行目まで
+        for (i = lineIndex; 0 < i; i--) {
+            for (j = 0, m = mapXLength; j < m; j++) {
+                // 一つ上の行をコピー
+                for (j = 0, m = mapXLength; j < m; j++) {
+                    this._blockMap[i][j] = this._blockMap[i-1][j];
+                }
             }
         }
     };
@@ -123,12 +180,20 @@ app.views.GameView = (function () {
     };
 
     GameView.prototype.spinBlock = function (spinIndex) {
+        if (this._gameController._isPause || this._gameController._isPause) {
+            return;
+        }
+
         if (this.canSpin(spinIndex)) {
             this.drawBlockMap();
         }
     };
 
     GameView.prototype.moveBlock = function (moveIndex) {
+        if (this._gameController._isPause || this._gameController._isPause) {
+            return;
+        }
+
         // var canMove = this.canMove(moveIndex);
         if (this.canMove(moveIndex)) {
             this.drawBlockMap();

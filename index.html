@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>tetris</title>
+    <link rel="stylesheet" href="css/style.css">
     <script src="js/app/app.js"></script>
     <script src="js/config/config.js"></script>
     <script src="js/app/events/type/KeyboardEventType.js"></script>
@@ -13,5 +14,26 @@
     <script src="js/main.js"></script>
 </head>
 <body>
+    <div id="container">
+        <section id="title_view">
+        <h1>TETRIS by duyoji</h1>
+        </section>
+        <section id="button_views">
+            <a href="#game" id="start_button" class="button">START</a>
+            <a href="#game" id="pause_button" class="button">PAUSE</a>
+        </section>
+        <section id="manual">
+            反時計周り : xキー,上矢印キー<br/>
+            時計回り : zキー, スペース <br/>
+            左移動 : 左矢印キー<br/>
+            右移動 : 右矢印キー
+        </section>
+        <section id="game">
+            <canvas id="game_view" width="320" height="480"></canvas>
+            <audio id="audio" preload="auto" loop>
+                <source src="sound/tetris.mp3" type="audio/mp3">
+            </audio>
+        </section>
+    </div>
 </body>
 </html>
